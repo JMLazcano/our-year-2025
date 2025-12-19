@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para el amor de mi vida ❤️</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <style>
+
+.gift-section {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.gift-box {
+  font-size: 4rem;
+  cursor: pointer;
+  animation: shake 2s infinite;
+}
+
+@keyframes shake {
+  0%,100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+.gift-coupon {
+  display: none;
+  margin-top: 20px;
+  background: white;
+  color: #111;
+  padding: 20px;
+  border-radius: 12px;
+  font-weight: bold;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(#0b1d3a, #122b55);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* SNOW */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      opacity: 0.8;
+      animation: fall linear infinite;
+      pointer-events: none;
+    }
+    @keyframes fall {
+      to { transform: translateY(110vh); }
+    }
+
+    /* MUSIC */
+    audio { display: none; }
+
+    /* HERO */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+    .hero h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.2rem;
+    }
+
+    /* CARD */
+    .card-container {
+      perspective: 1200px;
+      display: flex;
+      justify-content: center;
+      margin: 60px 0;
+    }
+    .card {
+      width: 320px;
+      height: 420px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1.2s;
+      cursor: pointer;
+    }
+    .card.open { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.4);
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .card-front {
+      background: linear-gradient(135deg, #b71c1c, #7f0000);
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.4rem;
+    }
+    .card-back {
+      background: #fff;
+      color: #111;
+      transform: rotateY(180deg);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* GALLERY */
+    .section { padding: 60px 20px; max-width: 1100px; margin: auto; }
+    .section h2 { text-align: center; margin-bottom: 30px; }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .gallery img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 14px;
+      transition: transform .3s;
+    }
+    .gallery img:hover { transform: scale(1.05); }
+
+    /* COLLAGE */
+    .collage {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 120px);
+      gap: 10px;
+    }
+    .collage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    .collage img.big {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+    }
+
+    /* COUNTDOWN */
+#countdown {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0,0,0,0.6);
+  padding: 14px 18px;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 0.9rem;
+  z-index: 9999;
+  backdrop-filter: blur(6px);
+}
+
+.countdown-title {
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  opacity: 0.9;
+}
+
+#timer {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* FIREWORKS */
+#fireworks {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: none;
+  z-index: 9998;
+}
+
+/* NEW YEAR MESSAGE */
+#newYearMessage {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.5rem;
+  color: white;
+  text-shadow: 0 0 20px rgba(255,255,255,0.8);
+  display: none;
+  z-index: 9999;
+  text-align: center;
+}
+
+/* Fireworks canvas already exists */
+#fireworks {
+  background: transparent;
+}
+
+.firma {
+  text-align: center;
+  margin-top: 40px;
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.4rem;
+  opacity: 0;
+  animation: firmaFade 3s forwards;
+  animation-delay: 1.5s;
+}
+
+@keyframes firmaFade {
+  to {
+    opacity: 1;
+    transform: translateY(-10px);
+  }
+}
+
+
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.slider img {
+  width: 300px;
+  height: 380px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.arrow {
+  font-size: 2.5rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* FADE IN */
+.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* FULLSCREEN VIEWER */
+#viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+#viewer img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 16px;
+}
+
+#viewer .close {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 2.5rem;
+  color: white;
+  cursor: pointer;
+}
+
+
+
+  </style>
+</head>
+<body>
+
+  
+<!-- MUSIC AUTOPLAY -->
+<audio id="bgMusic" loop>
+  <source src="https://drive.google.com/file/d/1xnGtb9uGUjqhUJ_ezrt0ZpDWO3S7DzWB/view?usp=drive_link" type="audio/mpeg">
+</audio>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Para el amor de mi vida 🎄❤️</h1>
+</section>
+
+<!-- CARD -->
+<div class="card-container">
+  <div class="card" onclick="openCard(this)">
+    <div class="card-face card-front">Ábreme 💌</div>
+    <div class="card-face card-back">
+      Solo quería desearle al amor de mi vida y a mi compañera de aventuras una feliz Navidad y feliz Año Nuevo. ✨
+      <br><br>
+      Que todo lo que te propongas se cumpla y seas muy feliz. Gracias por todos estos momentos juntos y por siempre estar para mí en lo bueno y en lo malo, y sobre todo por hacerme muy feliz.
+      <br><br>
+      Gracias por compartirme tu historia, tu familia y tu lugar, tu casita en Uruapan. Te amo y agradezco haberte conocido.
+      <br><br>
+      Gracias mis ojitos bonitos ❤️
+    </div>
+  </div>
+</div>
+
+
+
+<!-- GALLERY -->
+
+<section class="section">
+  <h2>Nuestros momentos 📸</h2>
+  <div class="slider">
+  <button class="arrow" onclick="prev()">❮</button>
+  <img id="sliderImg">
+  <button class="arrow" onclick="next()">❯</button>
+</div>
+</section>
+
+
+<!-- Galeria 2 -->
+
+<section class="section">
+  <h2>Nuestro Año 2025 💫</h2>
+  <div class="collage" id="collage"></div>
+</section>
+
+ 
+  <!-- FIRMA -->
+  <div class="firma">Juanma 2025</div>
+
+  <!-- REGALO -->
+ <div class="gift-section">
+  <div class="gift-box" onclick="openGift()">🎁</div>
+  <div class="gift-coupon" id="giftCoupon">
+    🎟️ Válido por una ida a ver a Rosalía 💖
+  </div>
+</div>
+
+</section>
+
+<footer>
+  Te amo ❤️ Feliz Navidad 🎄
+</footer>
+
+<script>
+  // SNOW
+  for (let i = 0; i < 40; i++) {
+    const snow = document.createElement('div');
+    snow.className = 'snowflake';
+    snow.innerHTML = '❄';
+    snow.style.left = Math.random() * 100 + 'vw';
+    snow.style.animationDuration = 5 + Math.random() * 5 + 's';
+    snow.style.fontSize = 12 + Math.random() * 20 + 'px';
+    document.body.appendChild(snow);
+  }
+</script>
+
+<script>
+  const music = document.getElementById('bgMusic');
+  let musicStarted = false;
+
+  function openCard(card) {
+    card.classList.toggle('open');
+
+    if (!musicStarted) {
+      music.play().catch(() => {});
+      musicStarted = true;
+    }
+  }
+</script>
+
+<!-- COUNTDOWN -->
+
+
+<!-- FIREWORKS CONTAINER -->
+<canvas id="fireworks"></canvas>
+
+<script>
+function startFireworks() {
+  const canvas = document.getElementById("fireworks");
+  const sound = document.getElementById("fireworkSound");
+  const msg = document.getElementById("newYearMessage");
+
+  canvas.style.display = "block";
+  msg.style.display = "block";
+  sound.play().catch(()=>{});
+
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const fireworks = [];
+
+  function createFirework() {
+    const x = Math.random() * canvas.width;
+    const y = canvas.height;
+    const targetY = Math.random() * canvas.height / 2;
+    const color = `hsl(${Math.random()*360},100%,60%)`;
+
+    fireworks.push({
+      x, y, targetY,
+      exploded: false,
+      particles: [],
+      color
+    });
+  }
+
+  function explode(fw) {
+    for (let i = 0; i < 80; i++) {
+      fw.particles.push({
+        x: fw.x,
+        y: fw.y,
+        vx: Math.random()*6-3,
+        vy: Math.random()*6-3,
+        alpha: 1
+      });
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    fireworks.forEach((fw, i) => {
+      if (!fw.exploded) {
+        fw.y -= 6;
+        ctx.fillStyle = fw.color;
+        ctx.beginPath();
+        ctx.arc(fw.x, fw.y, 3, 0, Math.PI*2);
+        ctx.fill();
+
+        if (fw.y <= fw.targetY) {
+          fw.exploded = true;
+          explode(fw);
+        }
+      } else {
+        fw.particles.forEach((p, pi) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.alpha -= 0.015;
+
+          ctx.fillStyle = fw.color.replace(")", `,${p.alpha})`).replace("hsl","hsla");
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
+          ctx.fill();
+
+          if (p.alpha <= 0) fw.particles.splice(pi,1);
+        });
+
+        if (fw.particles.length === 0) fireworks.splice(i,1);
+      }
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  setInterval(createFirework, 600);
+  animate();
+}
+</script>
+
+<div id="newYearMessage">
+  Otro año más contigo ❤️<br>
+  Feliz Año Nuevo 🎆
+</div>
+
+
+<audio id="fireworkSound">
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_2a3c78f7a3.mp3" type="audio/mpeg">
+</audio>
+
+
+<script>
+function openGift() {
+  document.getElementById("giftCoupon").style.display = "block";
+}
+</script>
+
+<script>
+const images = ["1000081513.jpg",
+"1000082594.jpg",
+"1000082898.jpg",
+"1000083571.jpg",
+"1000083703.jpg",
+"1000084635.jpg",
+"1000084726.jpg",
+"1000084877.jpg",
+"1000085441.jpg",
+"1000085465.jpg",
+"1000085498.jpg",
+"1000085523.jpg",
+"1000085618.jpg",
+"1000085668.jpg",
+"1000086437.jpg",
+"1000086540.jpg",
+"1000086548.jpg",
+"1000086914.jpg",
+"1000086939.jpg",
+"1000087144.jpg",
+"1000087396.jpg",
+"1000087405.jpg",
+"1000087458.jpg",
+"1000088218.jpg",
+"1000088280.jpg",
+"1000088600.jpg",
+"1000088636.jpg",
+"1000089492.jpg",
+"1000091305.jpg",
+"1000091316.jpg",
+"1000092237.jpg",
+"1000092286.jpg",
+"1000092633.jpg",
+"1000092681.jpg",
+"1000092683.jpg",
+"1000093105.jpg",
+"1000093600.jpg",
+"1000093600.jpg",
+"1000093600.jpg",
+"1000093632.jpg",
+"1000093379.jpg",
+"1000093688.jpg",
+"1000093843.jpg",
+"1000094062.jpg",
+"1000096031.jpg",
+"1000096243.jpg",
+"1000096416.jpg",
+"1000096432.jpg",
+"1000096985.jpg",
+"1000097890.jpg",
+"1000097967.jpg",
+"1000098403.jpg",
+"1000101370.jpg",
+"1000101553.jpg",
+"1000101583.jpg",
+"1000102051.jpg",
+"1000102137.jpg",
+"1000102284.jpg",
+"1000102517.jpg",
+"1000102699.jpg",
+"1000106016.jpg",
+"1000106041.webp",
+"1000107324.jpg",
+"1000107325.jpg",
+"1000107707.jpg",
+"1000107712.jpg",
+"1000108210.jpg",
+"1000108337.jpg",
+"1000108358.jpg",
+"1000108397.jpg",
+"1000108515.jpg",
+"1000108602.jpg",
+"1000108861.jpg",
+"1000111178 (2).jpg",
+"1000111203 (2).jpg",
+"1000112877.jpg",
+"1000113215.jpg",
+"1000113691.jpg",
+"1000113711.jpg",
+"1000113978.jpg",
+"1000114226.jpg",
+"1000114247.jpg",
+"1000115596.jpg",];
+
+let index = 0;
+const img = document.getElementById("sliderImg");
+
+function next() {
+  index = (index + 1) % images.length;
+  img.src = images[index];
+}
+
+function prev() {
+  index = (index - 1 + images.length) % images.length;
+  img.src = images[index];
+}
+
+// Auto slide
+setInterval(next, 4000);
+</script>
+
+<div id="countdown" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0,0,0,.5);
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: .9rem;">
+  Tiempo hasta comenzar otro año juntos 💖
+  <div id="timer"></div>
+</div>
+
+<canvas id="fireworks" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;"></canvas>
+
+<script>
+const timerEl = document.getElementById("timer");
+
+function updateTimer() {
+  const newYear = new Date("January 1, 2026 00:00:00 GMT-0600");
+  const now = new Date();
+  const diff = newYear - now;
+
+  if (diff <= 0) {
+    timerEl.innerHTML = "🎆 Feliz Año Nuevo 🎆";
+    startFireworks();
+    return;
+  }
+
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor(diff / (1000*60*60)) % 24;
+  const m = Math.floor(diff / (1000*60)) % 60;
+  const s = Math.floor(diff / 1000) % 60;
+
+  timerEl.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+}
+
+setInterval(updateTimer, 1000);
+updateTimer();
+</script>
+
+
+
+<script>
+function openViewer(src) {
+  const viewer = document.getElementById("viewer");
+  const viewerImg = document.getElementById("viewerImg");
+
+  viewerImg.src = src;
+  viewer.style.display = "flex";
+}
+
+function closeViewer() {
+  document.getElementById("viewer").style.display = "none";
+}
+</script>
+
+
+<div id="viewer">
+  <span class="close" onclick="closeViewer()">✕</span>
+  <img id="viewerImg">
+</div>
+
+<script>
+document.getElementById("viewer").addEventListener("click", e => {
+  if (e.target.id === "viewer") closeViewer();
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const collage = document.getElementById("collage");
+  if (!collage) return;
+
+  images.forEach((src, i) => {
+    const img = document.createElement("img");
+    img.src = encodeURI(src);
+
+    if (i % 7 === 0) img.classList.add("big");
+
+    img.onclick = () => openViewer(img.src);
+
+    collage.appendChild(img);
+  });
+});
+</script>
+
+</body>
+</html>
